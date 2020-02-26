@@ -1,0 +1,50 @@
+#! /usr/bin/env node
+
+let docs = require('./stub-docs')
+let {join} = require('path')
+let fs = require('fs')
+let slugify = require('slugify')
+let exists = fs.existsSync
+let write = fs.writeFileSync
+let mkdir = fs.mkdirSync
+
+let dir = join(process.cwd(), 'src', 'docs', 'en')
+let slug = s => slugify(s, {lower: true, remove: /[:’'`,&"]/g})
+
+// Generate a document from the defined outlines
+function makeDoc(doc) {
+  let fmSections = '\nsections:'
+  let mdSections = ''
+  if (doc.sections) {
+    doc.sections.forEach(s => {
+      // Frontmatter
+      fmSections += `\n  - ${s}`
+      // Markdown
+      mdSections += `\n## ${s}\n\nADD ME!\n\n`
+    })
+  }
+  else {
+    fmSections = ''
+    mdSections = '\n## Overview\n\nADD ME!\n\n'
+  }
+  return `---
+title: ${doc.doc}
+description: 160 (or fewer) character description of this document!${fmSections}
+---
+${mdSections || '\n'}`
+}
+
+// Run through the docs outline and generate the stub documents
+let clean = s => s.replace(/[/.]/g,'-').replace(/[/+@]/g,'')
+docs.forEach(doc => {
+  let docName = `${clean(doc.doc)}`
+  let docPath = join(dir, doc.cat, doc.group ? clean(doc.group) : '')
+  docPath = slug(docPath)
+  if (!exists(docPath)) {
+    mkdir(docPath, {recursive: true})
+  }
+  let docFile = slug(`${docName}.md`)
+  docPath = join(docPath, docFile)
+  if (exists(docPath)) return
+  else write(docPath, makeDoc(doc))
+})
