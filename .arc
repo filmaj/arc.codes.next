@@ -1,5 +1,5 @@
 @app
-arc.codes
+arc-codes
 
 @static
 folder dist
