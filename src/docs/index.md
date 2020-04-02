@@ -1,6 +1,6 @@
 ## Less, but better
 
-> The simplest, most powerful way to build serverlss web apps with JS, Python, and Ruby
+> The simplest, most powerful way to build serverless web apps with JS, Python, and Ruby
 
 Architect provides everything you need to build fast, modern, massively scalable cloud apps with low code, clear and terse config, and zero ceremony.
 
@@ -45,6 +45,6 @@ Preview your work locally with `arc sandbox` and ship to the cloud with `arc dep
 
 Learn more and get involved:
 
-- Join the Architect community on Slack
-- Star architect/architect on Github
+- Join the [Architect community on Slack](https://join.slack.com/t/architecture-as-text/shared_invite/MjE2MzU4Nzg0NTY1LTE1MDA2NzgyMzYtODE2NzRkOGRmYw)
+- Star [`@architect/architect`](https://github.com/architect/architect) on GitHub
 - Follow the quickstart
