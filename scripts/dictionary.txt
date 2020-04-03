@@ -95,6 +95,7 @@ envs
 errback
 eslint
 esmodules
+EventBridge
 filetype
 FQDN
 frontend
@@ -164,6 +165,7 @@ powershell
 PowerShell
 pragma
 pragmas
+Pragmas
 pre-compiled
 pre-installed
 pre-parsed
@@ -242,6 +244,7 @@ Webpack
 Websocket
 WebSocket
 WebSockets
+Whitespace
 XSS
 YAML
 ZoneEdit
