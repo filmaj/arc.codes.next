@@ -44,7 +44,7 @@ The `.arc` format follows a few simple rules:
 
 An `.arc` file example:
 
-```arc
+```bash
 # this is going to be great!
 @app
 hello
@@ -78,7 +78,7 @@ likes
 
 Running `arc init` in the same directory as the `.arc` file above generates the following function code:
 
-```bash
+```
 /
 |-src
 | |-http
