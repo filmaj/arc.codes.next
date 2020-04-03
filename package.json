@@ -2,8 +2,9 @@
   "name": "@architect/arc.codes",
   "scripts": {
     "push-test": "npm run spellcheck",
-    "spellcheck": "npx spellchecker ./src/docs/**/*.md --no-suggestions -q -d ./scripts/dictionary.js --plugins spell indefinite-article repeated-words syntax-mentions syntax-urls",
+    "lint": "npx spellchecker ./src/docs/**/*.md --no-suggestions -q -d ./scripts/dictionary.js --plugins spell indefinite-article repeated-words syntax-mentions syntax-urls",
     "start:eleventy": "eleventy --serve",
+    "build": "eleventy",
     "start": "ARC_STATIC_SPA=false npx arc sandbox & eleventy --serve --quiet"
   },
   "dependencies": {
