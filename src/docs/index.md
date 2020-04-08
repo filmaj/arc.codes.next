@@ -18,7 +18,7 @@ Architect helps you leverage powerful **Amazon Web Services** more quickly and e
 - [DynamoDB](https://aws.amazon.com/dynamodb/) for data persistence, querying and trigger functions
 - [Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html) for environment variables
 
-**QuickStart**
+**Quickstart**
 
 1. Install Architect
 
