@@ -2,7 +2,7 @@
   "name": "@architect/arc.codes",
   "version": "1.0.1",
   "scripts": {
-    "test": "npm run lint",
+    "push-test": "npm run lint",
     "lint": "npx spellchecker ./src/docs/**/*.md --no-suggestions -q -d ./scripts/dictionary.js --plugins spell indefinite-article repeated-words syntax-mentions syntax-urls",
     "start:eleventy": "eleventy --serve",
     "build": "eleventy",
