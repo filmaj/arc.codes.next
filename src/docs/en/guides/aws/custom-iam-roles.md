@@ -7,6 +7,8 @@ sections:
 
 ## Overview
 
+IAM, Identity and Access Management, is a feature of AWS which allows you to set permissions and access policies for human users and AWS resources like Lambda functions. IAM users are entities that assume IAM roles. The IAM roles will use policies to define the permissions for a set of resources. For example, a Lambda function will assume a role during execution that tells AWS what resources that Lambda has access to and what specific permissions it can operate on. 
+
 IAM Users, IAM Roles, IAM policies
 
 You can define a custom IAM role for your Lambda Function with an `.arc-config` file. 
@@ -25,7 +27,7 @@ memory
 policies {ARN}
 
 ```
-## AWS IAM Reference 
+
 
 AWS IAM 
 
