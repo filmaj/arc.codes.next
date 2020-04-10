@@ -3,8 +3,8 @@ let guides = [
     'Get started': [
       'Detailed setup',
       'Project Layout',
-      // 'Going beyond "Hello World"',
-      // 'Meet your new superpowers',
+      'Going beyond "Hello World"',
+      'Meet your new superpowers',
       'Upgrade guides',
     ]
   },

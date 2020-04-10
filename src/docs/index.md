@@ -4,7 +4,7 @@
 
 **Architect provides **everything** you need to build serverless apps that are fast, modern, & MASSIVELY scalable.**
 
-Architect helps you leverage powerful **Amazon Web Services** more quickly and easily than doing it yourself: 
+Architect helps you leverage powerful **Amazon Web Services** more easily and quickly.
 
 - [Lambda](https://aws.amazon.com/lambda/) *cloud native* functions for compute 
 - [API Gateway](https://aws.amazon.com/api-gateway/) for HTTP
