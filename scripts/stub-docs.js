@@ -71,7 +71,7 @@ module.exports = [
   {
     cat: 'Guides',
     group: 'Tutorials',
-    doc: 'Working locally / offline',
+    doc: 'Working locally & offline',
     sections: [
       'Overview',
       'Previewing vs. testing',

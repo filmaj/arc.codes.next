@@ -1,8 +1,8 @@
 let guides = [
   {
     'Get started': [
-      'Quick start',
       'Detailed setup',
+      'Project Layout',
       'Going beyond "Hello World"',
       'Meet your new superpowers',
       'Upgrade guides',

@@ -1,5 +1,5 @@
 ---
-title: Working locally / offline
+title: Working locally & offline
 description: 160 (or fewer) character description of this document!
 sections:
   - Overview
