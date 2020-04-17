@@ -1,3 +1,4 @@
+.arc-config
 .arc-env
 .env
 .html
@@ -238,6 +239,8 @@ UI
 unauthenticated
 unformatted
 Unordered
+unparsed
+unthrottled
 v5
 vars
 vimrc
