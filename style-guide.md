@@ -2,7 +2,7 @@
 
 Thank you for helping contribute to Architect's documentation!
 
-Our primary goal of these docsis to create a welcoming, easily accessible space for folks to learn about Architect in a way that respects their time.
+Our primary goal of these docs is to create a welcoming, easily accessible space for folks to learn about Architect in a way that respects their time.
 
 Architect happens to sit at the complex and challenging intersection of frameworks, cloud hosting, and application architecture – so it's our job to ensure we don't just have complete documentation, but that we've also provided a sufficient foundation of key concepts and reasoning along the way.
 
@@ -24,7 +24,7 @@ Remember: we can't simply assume Architect is somehow inherently valuable. It's 
 ## Guides & reference
 
 - Guides are learning and goal-oriented
-  - Broadly, they serve to aid in learning a related topic, and/or accomplishling a specific related goal
+  - Broadly, they serve to aid in learning a related topic, and/or accomplishing a specific related goal
   - Guides should aim to be highly usable and consistently reproducible
   - Extreme depth is not a requirement and may actually be an impediment; use your best judgment in presenting only the information necessary
   - Wherever possible and appropriate, always accompany guide content with a repo

@@ -47,6 +47,7 @@ CloudFormation
 CloudFront
 ClouDNS
 CloudWatch
+Cmd
 CMK
 CNAME
 codebase
@@ -86,6 +87,7 @@ DNS-based
 DNSimple
 DocumentClient
 DocumentDB
+DS_Store
 Dyn
 DynamoDB
 DynamoDB.
@@ -110,6 +112,7 @@ headless
 headlessly
 hostname
 html
+http
 HTTP
 httpOnly
 HTTPS
@@ -133,6 +136,7 @@ LEANX
 learnable
 learnings
 linter
+localhost:3333
 LTS
 macOS
 Microservices

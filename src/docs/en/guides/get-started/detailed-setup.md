@@ -14,6 +14,8 @@ sections:
 
 ## Prerequisites
 
+**TL/DR**
+
 **To work locally**, all you need is:
 - A supported [runtime](#runtimes)
 
@@ -26,6 +28,7 @@ sections:
   - \*nix: `~/.aws/credentials`
   - Windows: `C:\Users\USER_NAME\.aws\credentials`
 
+---
 
 ### Runtimes
 
@@ -52,6 +55,8 @@ Architect also supports the following runtimes in live infra, but not while work
 - Go: `1.x`,
 - .NET: `2.1`
 - Java: `8`
+
+---
 
 ## AWS Setup & IAM credentials
 
@@ -112,8 +117,16 @@ ADD ME!
 
 ## Install Architect
 
+The following command uses NPM, the package manager for JavaScript, to install Architect globally, a framework for building serverless applications. This will allow you to use Architect in any project directory on your computer.
+
 ```bash
 npm install -g @architect/architect
+```
+
+Or, if you prefer, you can install Architect into a local project:
+
+```bash
+npm init @architect ./testapp
 ```
 
 ## Example project
@@ -124,10 +137,16 @@ Create a project folder
 mkdir testapp
 cd testapp
 ```
+Start the dev server
+
+```bash
+arc sandbox
+```
+> Cmd / Ctrl + c exits the sandbox
 
 ## Work locally
 
-3. Run `arc init` to generate a basic project:
+Run `arc init` to generate a basic project:
 
 ```
 /
@@ -137,7 +156,7 @@ cd testapp
 └── .arc
 ```
 
-4. Check out your first `.arc` file & HTTP function!
+Check out your first `.arc` file & HTTP function!
 
 ```bash
 # /project/path/.arc
@@ -161,8 +180,12 @@ exports.handler = async function http(request) {
 
 ## Deploying
 
-ADD ME!
+Deploy your app
 
+```bash
+arc deploy
+```
+Congrats, you've successfully created a powerful, modern, serverless app! Nice work. 💖
 
 ## Clean Up
 
