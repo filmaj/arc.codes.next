@@ -1,6 +1,7 @@
 let guides = [
   {
     'Get started': [
+      'Quickstart',
       'Detailed setup',
       'Project Layout',
       'Going beyond "Hello World"',
