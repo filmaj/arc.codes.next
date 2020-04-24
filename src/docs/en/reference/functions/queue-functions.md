@@ -1,6 +1,6 @@
 ---
 title: Queue functions
-description: 160 (or fewer) character description of this document!
+description: Run cloud functions in the background!
 sections:
   - Overview
   - Getting started
@@ -10,8 +10,9 @@ sections:
 
 ## Overview
 
-ADD ME!
+Subscribe a Lambda function to an SQS Queue and then asynchronously publish JSON payloads to it. SQS automatically polls to receive messages. The programming model is identical to SNS but offers different service guarantees and configuration options. In particular, SNS will retry failed invocations twice whereas SQS will retry for 4 days (by default).
 
+Read the official AWS docs on Lambda retry behavior
 
 ## Getting started
 
