@@ -36,5 +36,16 @@ Current ways to set these variables:
 
 ## Credentials file vs. environment variables
 
+You can set AWS credentials from a specified file located in `~/.aws/credentials` (or `C:\Users\USER_NAME\.aws\credentials`) that can be picked up by the `.arc` file underneath the `@aws` pragma. 
+
+For example: 
+``` md
+# .arc file
+
+@aws
+profile default
+```
+You can also set the profile with environment variables
+
 
 
