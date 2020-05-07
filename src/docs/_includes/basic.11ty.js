@@ -3,6 +3,7 @@ delete require.cache[require.resolve('./_metadata.11ty')]
 delete require.cache[require.resolve('./_nav.11ty')]
 let metadata = require('./_metadata.11ty')
 let nav = require('./_nav.11ty')
+// let logo = require('../../assets/architect-logo-white.svg')
 
 module.exports = function layout (params) {
   params.lang = 'en'
@@ -19,7 +20,10 @@ module.exports = function layout (params) {
 </head>
 <body>
 <section class=wrapper>
-  <nav>${ Navigation }</nav>
+  <nav> 
+    <a href="/"><img src="../../assets/architect-logo-500b@2x.png" alt="logo" style="height:30px;"></a>
+    <br>${ Navigation }</br>
+  </nav>
   <main>
     <h1>${ pageTitle }</h1>
     ${ params.layoutContent }<br>

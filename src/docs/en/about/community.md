@@ -7,8 +7,9 @@ description: 160 (or fewer) character description of this document!
 
 Architect is an open source project hosted by the [OpenJS Foundation](https://openjsf.org) and it is totally ok to ask for help! Use the issue tracker to file bugs, request features, or even just to ask a question.
 <ul style=list-style:none>
-<li>💬 Come chat with us in <a href=https://join.slack.com/t/architecture-as-text/shared_invite/MjE2MzU4Nzg0NTY1LTE1MDA2NzgyMzYtODE2NzRkOGRmYw)>Slack</a></li>
+<li>Come chat with us in <a href=https://join.slack.com/t/architecture-as-text/shared_invite/MjE2MzU4Nzg0NTY1LTE1MDA2NzgyMzYtODE2NzRkOGRmYw)>Slack</a></li>
 <li>🌟 Star the project on Github <a href=https://github.com/architect/architect><code>architect/architect</code></a></li>
+<li>Learn <a href=/en/about/contributor-guide>how to contribute</a></li>
 </ul>
 
 ---

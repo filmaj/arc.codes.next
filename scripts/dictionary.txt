@@ -1,5 +1,7 @@
+.arc-config
 .arc-env
 .env
+.html
 .vimrc
 `build`ing
 ACM
@@ -7,6 +9,7 @@ Alexa
 APIs
 arc-example-cors
 arc-repos
+arcfile
 arcana
 ARN
 ARNs
@@ -44,6 +47,7 @@ CloudFormation
 CloudFront
 ClouDNS
 CloudWatch
+Cmd
 CMK
 CNAME
 codebase
@@ -83,6 +87,7 @@ DNS-based
 DNSimple
 DocumentClient
 DocumentDB
+DS_Store
 Dyn
 DynamoDB
 DynamoDB.
@@ -95,6 +100,7 @@ envs
 errback
 eslint
 esmodules
+eval
 EventBridge
 filetype
 FQDN
@@ -106,6 +112,7 @@ headless
 headlessly
 hostname
 html
+http
 HTTP
 httpOnly
 HTTPS
@@ -129,6 +136,7 @@ LEANX
 learnable
 learnings
 linter
+localhost:3333
 LTS
 macOS
 Microservices
@@ -235,6 +243,8 @@ UI
 unauthenticated
 unformatted
 Unordered
+unparsed
+unthrottled
 v5
 vars
 vimrc
