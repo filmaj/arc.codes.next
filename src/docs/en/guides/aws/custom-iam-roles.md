@@ -48,4 +48,5 @@ concurrency 1
 policies arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess
 ```
 ARNs, Amazon Resource Names, are globally unique identifiers to specify a resource. You can create new policies in the AWS console or use Managed Policies that are made available by AWS. 
+
 [Check out the AWS documentation for more information on Managed Policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)

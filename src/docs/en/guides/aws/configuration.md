@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: 160 (or fewer) character description of this document!
+description: Configuration options for deploying to AWS
 sections:
   - Deploy buckets
   - Default runtime
@@ -9,8 +9,10 @@ sections:
 
 ## S3 Buckets for Deploy artifacts
 
-You can declare a specific S3 bucket, in the same region, to hold your CloudFormation deployment artifacts in the `.arc` file under the `@aws` pragma.
-If it is not defined then Architect will create an S3 bucket for you. 
+You can declare an existing S3 bucket, in the same region, to hold your CloudFormation deployment artifacts in the `.arc` file under the `@aws` pragma. 
+
+If a bucket is not defined then Architect will create an S3 bucket for you. 
+
 Be sure to note that AWS has [bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules)
 
 ## Default runtime 
