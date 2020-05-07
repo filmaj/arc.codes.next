@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: Configuration options for deploying to AWS.
+description: Configuration options for deploying to AWS
 sections:
   - Deploy buckets
   - Default runtime

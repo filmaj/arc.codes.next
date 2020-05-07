@@ -55,7 +55,7 @@ profile work
 
 Alternatively, you can set AWS credentials with environment variables, which is useful for scripting and temporarily setting profiles. 
 
-If you do not specify these environment variables it will fallback to whatever credentials you defined for your `[default]` in `~/.aws/credentials` (or `C:\Users\USER_NAME\.aws\credentials`).
+If you do not specify these environment variables, Architect will fallback to whatever credentials you defined for your `[default]` in `~/.aws/credentials` (or `C:\Users\USER_NAME\.aws\credentials`).
 
 Current ways to set these variables:
 
@@ -65,7 +65,4 @@ Current ways to set these variables:
 
 > Tip: Windows users will want to use [cross-env](https://www.npmjs.com/package/cross-env) for cross platform env vars.
 
-Architect will first give priority to credentials and configurations in the `.arc` file, then the local credentials file, and then environment variables. 
-
-
-
+Architect will first give priority to credentials and configurations in the `.arc` file, then the local credentials file, and then environment variables.
