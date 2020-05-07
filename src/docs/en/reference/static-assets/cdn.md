@@ -43,10 +43,23 @@ Running `arc deploy` will create a CloudFront distribution for the S3 website an
 
 ## Best practices
 
-ADD ME!
+**⚠️ Important!**
 
+CloudFront support is implemented independently of CloudFormation because the deployment performance combining these services is unacceptably slow.
+
+Unfortunately when CF distributions are deployed via CloudFormation they are updated every deployment and this can push the feedback cycle 15 to 20 minutes. For this reason Architect creates a CDN distribution if you have `@cdn` in the `.arc` asynchronously via the AWS SDK and when it is available you will see cloudfront.com URLs printed into the console. Likewise, removing `@cdn` from the distribution will mark it for deletion (which itself can take a long time).
 
 ## Cache invalidation
 
-ADD ME!
+Enable fingerprinting in `.arc`:
 
+```bash
+@app
+my-site
+
+@cdn
+@static
+fingerprint true
+```
+
+This ensures your application can be updated independently of long lived caches.
