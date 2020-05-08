@@ -1,46 +1,64 @@
 ---
 title: Cloud function middleware
-description: 160 (or fewer) character description of this document!
+description: Short Tutorial showing both async/await and callback-style runtime helpers to modify request objects.
 sections:
   - Overview
-  - How (and why) to use middleware
+  - arc.http.async
+  - arc.http
 ---
 
 ## Overview
 
-Architect provides two optional middleware helpers for cutting down on boilerplate HTTP operations. 
-
-Both middleware helpers conveniently attach user sessions to the incoming `request` object (if applicable), and decode and parse the `request` body (again, if applicable).
-
-Use whatever feels right for your project and team needs! 
+Architect provides two optional middleware helpers for cutting down on boilerplate HTTP operations by using the @architect/functions library. 
 
 - `arc.http.async` is an `async/await` style middleware API
 - `arc.http` is a classic callback-style middleware API
- - Functions similarly to Express, and supported since the earliest versions of Architect
 
+Both middleware helpers conveniently attach user sessions to the incoming `request` object (if applicable), and decode and parse the `request` body (again, if applicable).
 
-`arc.http.async`
+We'll take a look at an example with each and discuss some common use cases. 
+
+## `arc.http.async`
 
 Combine multiple `async/await` operations in a single HTTP function handler.
 
-`arc.http.async()` accepts `async` functions as arguments, and returns a Lambda compatible function signature. 
-
-- Each function receives a `request` as the first argument
-- If the `request` has a session or body, it will automatically be decoded, parsed, and attached to the `request` object
-- If a function doesn't return anything, the `request` will then be passed to the next function
-- If a function returns a modified `request`, the modified `request` will be passed to the next function
-- If a function returns a [`response`](/guides/http), this will end processing and emit the `response` to the client
-
+`arc.http.async()` accepts `async` functions as arguments, and returns a Lambda compatible function signature. These functions will be run in series and allow you to transform the request object with multiple async functions before emitting a `response` to the client. 
 
 ### Example
 
-Here's an example in which we'll register `addCountryCode`, `requireLogin`, and `showDashboard` functions to run in series.
+Here's an example in which we'll register `addCountryCode`, `validateUser`, and `showDashboard` functions to run in series.
 
 - `addCountryCode` adds `countryCode` to our `request`
-- `requireLogin` will return a redirect response if the user is not logged in (ending `arc.http.async` processing), or return nothing if the user is logged in (continuing execution)
+- `validateUser` will return a redirect response if the user is not logged in (ending `arc.http.async` processing), or return nothing if the user is logged in (continuing execution)
 - `showDashboard` will show a dashboard for users, since we know they're logged in
 
+1. Create a new Architect project with `arc init` and replace the `.arc` file with the following:
+
+```md
+@app
+arc-async
+
+@http
+get /
+get /dashboard
+```
+2. Now we can run `arc create` and it will scaffold the folder structure we need to continue.
+
+3. You should now see two HTTP functions, `get-index` and `get-dashboard`.
+
+4. In order to use the runtime helpers, we have to install `@architect/functions` and require it at the top of the file. You can imagine each HTTP function as a self contained universe. So any dependencies you need have to be present within the function folder. 
+
+```bash
+cd src/http/get-dashboard
+npm init -y
+npm install @architect/functions
+```
+
+4. Let's go ahead and replace the contents of `src/http/get-dashboard/index.js` with the following:
+
 ```javascript
+// src/http/get-dashboard/index.js
+
 let arc = require('@architect/functions')
 
 // Add a 'countryCode' attribute to the request
@@ -53,29 +71,29 @@ async function addCountryCode(request) {
   return request
 }
 
-// Redirect if the user isn't logged in
-async function requireLogin(request) {
-  let state = request.session
+// Check to see if the user in a query string is on the authorized list 
+async function validateUser(request) {
+  let user = request.query.user
+  let authorized = ['nic_cage']
 
-  if (!state.isLoggedIn) {
-    console.log(`Attempt to access dashboard without logging in!`)
+  if(!authorized.includes(user)) {
+    console.log(`You are not authorized`)
     return {
-      status: 302,
-      location: `/login`
+      status: 200,
+      body: `Meditate further for authorization`
     }
   }
-  console.log(`We're logged in`)
-  // return nothing, so execution continues
+  console.log(`nic_cage is authorized`)
+  //return nothing, so execution continues
 }
 
 // Show a HTML page. If we've reached this step we know the user is logged in, and we know their country code!
 async function showDashboard(request) {
   console.log(`Showing dashboard`)
-
   let body = `
   <body>
     <h1>Dashboard</h1>
-    <p>You are logged in from ${request.countryCode}! <a href="/logout">logout</a><p>
+    <p>Hi! ${request.query.user} You are logged in from ${request.countryCode}! <a href="/logout">logout</a><p>
   </body>`
   return {
     status: 200,
@@ -84,14 +102,14 @@ async function showDashboard(request) {
   }
 }
 
-exports.handler = arc.http.async(addCountryCode, requireLogin, showDashboard)
+exports.handler = arc.http.async(addCountryCode, validateUser, showDashboard)
 ```
+In a single function, we can add a country code to the `request` object, pass it to an authentication function, and finally build a `response` back to the client. 
 
-Super clean!
+
+
 
 The `arc.http.async` API works well with [the `shared` folder](/guides/share-code) to do things like re-use `requireLogin` to protect multiple HTTP functions.
-
-Like normal [Architect routes](/guides/http), `arc.http.async` routes also support the AWS [`context`](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html) object. `context` will be passed on as a second option to each route.
 
 
 ## Common use cases
@@ -100,15 +118,10 @@ Like normal [Architect routes](/guides/http), `arc.http.async` routes also suppo
 - Tracking user interactions (kick off a `@event` to save something to the database without blocking the request)
 - Adding additional info to requests
 
-<hr>
+
 
 # <a id=arc.http href=#arc.http>`arc.http`</a>
 
-Architect provides two optional middleware helpers for cutting down on boilerplate HTTP operations.
-
-Both middleware helpers conveniently attach user sessions to incoming `request` object (if applicable), and decode and parse the `request` body (again, if applicable).
-
-Use whatever feels right for your project and team needs!
 
 - `arc.http` is a classic continuation-passing style middleware API
   - Functions similarly to Express, and supported since the earliest versions of Architect
