@@ -282,5 +282,5 @@ Architect version 5 is here!
 
 Things we added:
 
-Websocket support
+WebSocket support
 New middleware - added later in arc 4, and out of the box in Arc 5

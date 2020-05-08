@@ -35,7 +35,7 @@ Architect provides endpoints pre-configured with Lambda handler functions deploy
 
 ### Provision
 
-Your `.arc` manifest file abstracts API Gateway configuration and provisioning, while `@architect/functions` (optionally) adds a very light but powerful API to Lambda for working with WebSockets. You provision websocket functions by adding th `ws` pragma to your `.arc` manifest file.
+Your `.arc` manifest file abstracts API Gateway configuration and provisioning, while `@architect/functions` (optionally) adds a very light but powerful API to Lambda for working with WebSockets. You provision WebSocket functions by adding the `ws` pragma to your `.arc` manifest file.
 
 This `.arc` file defines both HTTP and WebSocket endpoints:
 
