@@ -174,10 +174,12 @@ PowerShell
 pragma
 pragmas
 Pragmas
+pre-configured
 pre-compiled
 pre-installed
 pre-parsed
 pre-provision
+pre-provisioning
 pre-wired
 Prerendering
 privs
@@ -248,12 +250,13 @@ unthrottled
 v5
 vars
 vimrc
+VMs
 vs
 webhooks
 Webpack
-Websocket
 WebSocket
 WebSockets
+WebSocket-enabled
 Whitespace
 XSS
 YAML
