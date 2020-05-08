@@ -118,7 +118,7 @@ In a single handler, we can add a country code to the `request` object, pass it 
 cd /arc-async-middleware
 arc sandbox
 ```
-Navigate to http://localhost:3333/dashboard?user=nic_cage and you should see the final HTML come through. If you change the query string to another user, like `user=paul`, it will fail. The arc.http.async API works well with the shared folder to do things like re-use validateUser to protect multiple HTTP functions.
+Navigate to `http://localhost:3333/dashboard?user=nic_cage` and you should see the final HTML come through. If you change the query string to another user, like `user=paul`, it will fail. The arc.http.async API works well with the shared folder to do things like re-use `validateUser` to protect multiple HTTP functions.
 
 ## Common use cases
 
