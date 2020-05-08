@@ -33,8 +33,14 @@ Here's an example in which we'll register `addCountryCode`, `validateUser`, and 
 - `showDashboard` will show a dashboard for users, since we know they're logged in
 
 1. Create a new Architect project with `arc init` and replace the `.arc` file with the following:
+```
+mkdir arc-async-middleware
+cd arc-async-middleware
+arc init
+```
 
 ```md
+# .arc file
 @app
 arc-async
 
@@ -46,7 +52,7 @@ get /dashboard
 
 3. You should now see two HTTP functions, `get-index` and `get-dashboard`.
 
-4. In order to use the runtime helpers, we have to install `@architect/functions` and require it at the top of the file. You can imagine each HTTP function as a self contained universe. So any dependencies you need have to be present within the function folder. 
+4. In order to use the runtime helpers, we have to install `@architect/functions` and require it at the top of the file. Each HTTP function as a self contained unit, so any dependencies you need must be present within the function folder.
 
 ```bash
 cd src/http/get-dashboard
@@ -54,7 +60,7 @@ npm init -y
 npm install @architect/functions
 ```
 
-4. Let's go ahead and replace the contents of `src/http/get-dashboard/index.js` with the following:
+5. Let's go ahead and replace the contents of `src/http/get-dashboard/index.js` with the following:
 
 ```javascript
 // src/http/get-dashboard/index.js
@@ -104,21 +110,21 @@ async function showDashboard(request) {
 
 exports.handler = arc.http.async(addCountryCode, validateUser, showDashboard)
 ```
-In a single function, we can add a country code to the `request` object, pass it to an authentication function, and finally build a `response` back to the client. 
+In a single handler, we can add a country code to the `request` object, pass it to an authentication function, and finally build a `response` back to the client. 
 
+6. Now let's try it using Sandbox, our local dev environment. 
 
-
-
-The `arc.http.async` API works well with [the `shared` folder](/guides/share-code) to do things like re-use `requireLogin` to protect multiple HTTP functions.
-
+```
+cd /arc-async-middleware
+arc sandbox
+```
+Navigate to http://localhost:3333/dashboard?user=nic_cage and you should see the final HTML come through. If you change the query string to another user, like `user=paul`, it will fail. The arc.http.async API works well with the shared folder to do things like re-use validateUser to protect multiple HTTP functions.
 
 ## Common use cases
 
 - Authentication
 - Tracking user interactions (kick off a `@event` to save something to the database without blocking the request)
 - Adding additional info to requests
-
-
 
 # <a id=arc.http href=#arc.http>`arc.http`</a>
 
