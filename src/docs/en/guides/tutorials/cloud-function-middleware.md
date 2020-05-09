@@ -5,6 +5,7 @@ sections:
   - Overview
   - arc.http.async
   - arc.http
+  - arc.http.express
 ---
 
 ## Overview
@@ -16,11 +17,13 @@ Architect provides two optional middleware helpers for cutting down on boilerpla
 
 Both middleware helpers conveniently attach user sessions to the incoming `request` object (if applicable), and decode and parse the `request` body (again, if applicable).
 
+HTTP functions are executed in a stateless and short lived environment. It is unreliable to chain http functions together without a data store, message bus, or client session in-between because any errors will fail silently by default. You should plan your function to not be dependent on the output from previous functions. By catching the request object and safely passing it around in middleware functions, you can more easily trace errors and choose when to fan out the work.
+
 We'll take a look at an example with each and discuss some common use cases. 
 
 ## `arc.http.async`
 
-Combine multiple `async/await` operations in a single HTTP function handler.
+Combine multiple `async/await` operations in a single HTTP function handler. 
 
 `arc.http.async()` accepts `async` functions as arguments, and returns a Lambda compatible function signature. These functions will be run in series and allow you to transform the request object with multiple async functions before emitting a `response` to the client. 
 
@@ -32,13 +35,13 @@ Here's an example in which we'll register `addCountryCode`, `validateUser`, and 
 - `validateUser` will return a redirect response if the user is not logged in (ending `arc.http.async` processing), or return nothing if the user is logged in (continuing execution)
 - `showDashboard` will show a dashboard for users, since we know they're logged in
 
-1. Create a new Architect project with `arc init` and replace the `.arc` file with the following:
-```
+1. Create a new Architect project with `arc init` in your terminal
+```bash
 mkdir arc-async-middleware
 cd arc-async-middleware
 arc init
 ```
-
+2. Replace the `.arc` file with the following:
 ```md
 # .arc file
 @app
@@ -48,9 +51,9 @@ arc-async
 get /
 get /dashboard
 ```
-2. Now we can run `arc create` and it will scaffold the folder structure we need to continue.
+3. Run `arc create` to scaffold the folder structure and some template code.
 
-3. You should now see two HTTP functions, `get-index` and `get-dashboard`.
+5. You should now see two HTTP functions, `get-index` and `get-dashboard`.
 
 4. In order to use the runtime helpers, we have to install `@architect/functions` and require it at the top of the file. Each HTTP function as a self contained unit, so any dependencies you need must be present within the function folder.
 
@@ -114,131 +117,65 @@ In a single handler, we can add a country code to the `request` object, pass it 
 
 6. Now let's try it using Sandbox, our local dev environment. 
 
-```
+```bash
 cd /arc-async-middleware
 arc sandbox
 ```
 Navigate to `http://localhost:3333/dashboard?user=nic_cage` and you should see the final HTML come through. If you change the query string to another user, like `user=paul`, it will fail. The arc.http.async API works well with the shared folder to do things like re-use `validateUser` to protect multiple HTTP functions.
 
-## Common use cases
+### Common use cases for `arc.http.async`
 
-- Authentication
+- Authentication as shown above.
 - Tracking user interactions (kick off a `@event` to save something to the database without blocking the request)
-- Adding additional info to requests
+- Adding additional information to requests
 
-# <a id=arc.http href=#arc.http>`arc.http`</a>
+------------
 
+## `arc.http`
 
-- `arc.http` is a classic continuation-passing style middleware API
-  - Functions similarly to Express, and supported since the earliest versions of Architect
-- [`arc.http.async`](/reference/functions/http/node/async) is an `async/await` style middleware API
-
-
-## Basic Usage
-
-```javascript
-let arc = require('@architect/functions')
-
-function route(req, res) {
-  let html = '<h1>hello world</h1>'
-  res({html})
-}
-
-exports.handler = arc.http(route)
-```
-
-`arc.http` registers one, or more, functions with the signature `(req, res, next)=>`.
-
-`req` has the following keys:
-
-- `body` any `application/x-www-form-urlencoded` form variables as a plain `Object`
-- `path` absolute path of the request
-- `method` one of `GET`, `POST`, `PATCH`, `PUT` and `DELETE`
-- `params` any URL params defined
-- `query` any query params defined
-- `headers` a plain `Object` of request headers
-- `session` a plain `Object` representing the current session
-
-`res` is a function that accepts named parameters:
-
-- **Required**: One of
-  - `json`
-  - `html`
-  - `text`
-  - `css`
-  - `js`
-  - `xml`
-  - `location`
-- Optionally: `session` to assign to the current session
-- Optionally: `status` or `code` of:
-  - `201` Created
-  - `202` Accepted
-  - `204` No Content
-  - `400` Bad Request
-  - `403` Forbidden
-  - `404` Not Found
-  - `406` Not Acceptable
-  - `409` Conflict
-  - `415` Unsupported Media Type
-  - `500` Internal Serverless Error
-
-The default HTTP status code is `200`. A `302` is sent automatically when redirecting via `location`.
-
----
+`arc.http` is a classic continuation-passing style middleware API. It registers one, or more, functions with the signature `(req, res, next)=>`.
+This type of middleware can execute code, make changes to the request objects, and call the next middleware function that is registered.
 
 - HTTP `POST` routes can **only** call `res` with `location` key and value of the path to redirect to.
 - `session` can also optionally be set
 
-In the following example we define `validate` middleware:
+### Example
 
-```javascript
-var arc = require('@architect/functions')
-var sendEmail = require('./_send-email')
+In this example we will use the classic HTTP middleware function to render session data with user interaction.
 
-function validate(req, res, next) {
-  var isValid = typeof req.body.email != 'undefined'
-  if (isValid) {
-    next()
-  }
-  else {
-    res({
-      session: {
-        errors: ['email missing']
-      },
-      location: '/contact'
-    })
-  }
-}
-
-function handler(req, res) {
-  sendEmail({
-    email: req.body.email
-  },
-  function _email(err) {
-    res({
-      location: `/contact?success=${err? 'yep' : 'ruhroh'}`
-    })
-  })
-}
-
-exports.handler = arc.http(validate, handler)
+1. Create a new Architect project with `arc init` in your terminal
+```bash
+mkdir arc-http-middleware
+cd arc-http-middleware
+arc init
 ```
+2. Replace the `.arc` file with the following:
+```md
+# .arc file
+@app
+arc-http-middleware
 
-Things to understand:
+@http
+get /
+post /count
+```
+3. Run `arc create` to scaffold the folder structure and some template code.
 
-- `arc.http` accepts one or more functions that follow Express-style middleware signature: `(req, res, next)=>`
-- `req` is a plain JavaScript `Object` with `path`, `method`, `query`, `params`, `body` keys
-- `res` is a function that must be invoked with named params:
-  - `location` with a URL value (a string starting w `/`)
-  - `session` (optional) a plain `Object`
-- `res` can also be invoked with an `Error`
-  - optionally the `Error` instance property of `code`, `status` or `statusCode` can be one of `403`, `404` or `500` to change the HTTP status code
-- `next` (optional) is a function to continue middleware execution
+5. You should now see two HTTP functions, `get-index` and `post-count`.
 
-Here's an example using `session` and `location`. First we render a form:
+4. In order to use the runtime helpers, we have to install `@architect/functions` and require it at the top of the file. Each HTTP function as a self contained unit, so any dependencies you need must be present within the function folder.
 
+```bash
+cd src/http/get-index
+npm init -y
+npm install @architect/functions
+
+cd ../post-count
+npm init -y
+npm install @architect/functions
+```
+5. Now we can replace the contents of `/src/http/get-index/index.js` with the following: 
 ```javascript
-// src/html/get-index
 var arc = require('@architect/functions')
 
 var form = `
@@ -255,13 +192,9 @@ function handler(req, res) {
 }
 
 exports.handler = arc.http(handler)
-
 ```
-
-The form handler increments `req.session.count` and redirects back home.
-
-```javascript
-// src/html/post-count
+6. We can also replace the contents of `/src/http/post-count/index.js` with the following: 
+``` javascript
 var arc = require('@architect/functions')
 
 function handler(req, res) {
@@ -275,10 +208,61 @@ function handler(req, res) {
 exports.handler = arc.http(handler)
 ```
 
+7. Now we can get it running locally to see our results, we'll have to make sure to be in our project root directory and install our local dev server, Sandbox.
+
+``` bash
+cd /arc-http-middleware
+npm init -y 
+npm install @architect/sandbox
+arc sandbox
+```
+8. You should now see a page served at http://localhost:3333 that updates with the number of clicks. 
+
+## Things to note about `arc.http`:
+
+- `arc.http` accepts one or more functions that follow Express-style middleware signature: `(req, res, next)=>`
+- `req` is a plain JavaScript `Object` with `path`, `method`, `query`, `params`, `body` keys
+- `res` is a function that must be invoked with named params:
+  - `location` with a URL value (a string starting w `/`)
+  - `session` (optional) a plain `Object`
+- `res` can also be invoked with an `Error`
+  - optionally the `Error` instance property of `code`, `status` or `statusCode` can be one of `403`, `404` or `500` to change the HTTP status code
+- `next` (optional) is a function to continue middleware execution
+
 ---
 
+## arc.http.express
 
-## How (and why) to use middleware
+Architect also has a middleware function to wrap Express.js logic, this is good for migrating paths from existing Express applications into a serverless environment. It should be noted that bundling an entire web server in a Lambda function will result in poor performance if the entire function payload with dependencies exceeds 5MB. But, if you are already comfortable with understanding Express routing for backend APIs, then this helper can get your app up and running. 
 
+### Example 
+1. Let's make a new Architect project directly from the command line! 
 
+This command will create a new directory, install Architect into the local project folder with an app structure already scaffolded. 
+```bash
+npm init @architect ./myexpress
+```
 
+2. Take a look inside and you will see one HTTP function, `get-index`. This will be a single Lambda that will be our entire Express app behind an API Gateway endpoint. 
+
+3. Let's add our dependencies to `get-index` so we can require `@architect/functions`. 
+
+```bash
+cd myexpress/src/http/get-index
+npm init -y 
+npm i express @architect/functions
+```
+4. Replace the contents of `src/http/get-index/index.js` with the following: 
+
+```javascript
+let arc = require('@architect/functions')
+let express = require('express')
+let app = express()
+app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/cool', (req, res)=> res.send('very cool'))
+exports.handler = arc.http.express(app)
+```
+
+5. Start Sandbox, the local dev server with `npm start` and check out the results by navigating to http://localhost:3333
+
+Each time a visitor reaches the root of your app, it will take the request and it behave the same way as a full express server.
