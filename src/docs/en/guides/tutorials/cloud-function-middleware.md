@@ -51,7 +51,7 @@ arc-async
 get /
 get /dashboard
 ```
-3. Run `arc create` to scaffold the folder structure and some template code.
+3. Run `arc create` to generate the folder structure and some template code.
 
 5. You should now see two HTTP functions, `get-index` and `get-dashboard`.
 
@@ -159,7 +159,7 @@ arc-http-middleware
 get /
 post /count
 ```
-3. Run `arc create` to scaffold the folder structure and some template code.
+3. Run `arc create` to generate the folder structure and some template code.
 
 5. You should now see two HTTP functions, `get-index` and `post-count`.
 
@@ -238,7 +238,7 @@ Architect also has a middleware function to wrap Express.js logic, this is good 
 ### Example 
 1. Let's make a new Architect project directly from the command line! 
 
-This command will create a new directory, install Architect into the local project folder with an app structure already scaffolded. 
+This command will create a new directory, install a local version of Architect, and generate a folder structure.
 ```bash
 npm init @architect ./myexpress
 ```
