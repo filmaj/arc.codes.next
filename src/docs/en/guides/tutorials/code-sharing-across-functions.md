@@ -28,7 +28,6 @@ You can organize the code in `src/shared` in a way that makes sense for your pro
 - `src/shared/helpers`
 - `src/shared/lib`
 
-
 ## `src/shared` example 
 
 In this example, we will create an example helper that all of our functions will need.
@@ -48,17 +47,12 @@ arc-shared
 @http
 get /
 get /about
-post /logout
 
 ```
-
-
- 
 
 ## src/views
 
 The `src/views` folder is a special location that allows you to include code for each of your HTTP functions with a GET route. In this example we will include a layout template that your HTTP functions can use.
-
 
 2. Modify the `.arc` file with the following:
 
