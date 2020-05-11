@@ -31,6 +31,26 @@ You can organize the code in `src/shared` in a way that makes sense for your pro
 
 ## `src/shared` example 
 
+In this example, we will create an example helper that all of our functions will need.
+
+1. To get started with sharing code, let's create a new project from the command line. The following command will generate a project structure and template code.
+```bash
+npm init @architect ./arc-shared-views
+```
+
+2. Next we can modify the `.arc` file with the following: 
+```md 
+# .arc file
+
+@app 
+arc-shared
+
+@http
+get /
+get /about
+post /logout
+
+```
 
 
  
@@ -39,10 +59,7 @@ You can organize the code in `src/shared` in a way that makes sense for your pro
 
 The `src/views` folder is a special location that allows you to include code for each of your HTTP functions with a GET route. In this example we will include a layout template that your HTTP functions can use.
 
-1. To get started with sharing code, let's create a new project from the command line. The following command will generate a project structure and template code.
-```bash
-npm init @architect ./arc-shared-views
-```
+
 2. Modify the `.arc` file with the following:
 
 ```md
@@ -141,7 +158,7 @@ exports.handler = async function http (request) {
 When `/about` is requested, this function will execute and be able to return the data being passed into `Layout()`. 
 
 6. Finally we have some finer control over which GET functions will have `/src/views` copied into it. We do this with the `@views` pragma in the `.arc` file. 
-We want to create a url to our style sheet, but this function doesn't need access to the layout code. Only the GET routes under `@views` will have the `src/views` code copied into it. 
+We want to create an URL to our style sheet, but this function doesn't need access to the layout code. Only the GET routes under `@views` will have the `src/views` code copied into it. 
 
 Now we can modify the code in `/src/http/get-css-000stylesheet/index.js` with the following: 
 ```javascript
