@@ -36,32 +36,91 @@ In this example, we will create an example helper that all of our functions will
 ```bash
 npm init @architect ./arc-shared-views
 ```
-
-2. Next we can modify the `.arc` file with the following: 
+2. Next we can modify the `.arc` file in the root of the project with the following: 
 ```md 
 # .arc file
-
 @app 
 arc-shared
 
 @http
 get /
-get /about
-
+get /answer
 ```
 
-## src/views
+3. Now we can start to build out our `/src/shared` modules by creating a new folder and file at `/src/shared/helper.js`
 
-The `src/views` folder is a special location that allows you to include code for each of your HTTP functions with a GET route. In this example we will include a layout template that your HTTP functions can use.
+In our example we need to make sure a number is converted to a string and this helper function will do the trick! 
 
-2. Modify the `.arc` file with the following:
+``` javascript
+// src/shared/helper.js
+
+function theAnswer() {
+  //really important number that needs to be converted to a string
+  let universe = 42 
+  return universe.toString()
+}
+
+module.exports = theAnswer
+```
+4. We can use this helper in all of our functions by just requiring it from `@architect/shared/`
+Modify the `get-answer` function with the following: 
+
+```javascript
+// src/http/get-answer/index.js
+
+let Answer = require('@architect/shared/helper')
+
+exports.handler = async function http (req) {
+  return {
+    headers: {
+      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
+      'content-type': 'text/html; charset=utf8'
+    },
+    body: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> The Answer is </title>
+      </head>
+      <body>
+        <p> This is the Answer: ${Answer()} </p>
+      </body>
+      </html>
+    `
+  }
+}
+```
+5. Run `npm start` from the command line and take a look at our code structure. Sandbox will hydrate our functions with a `node_modules/@architect/shared` directory which is part of the function's payload when deployed and executed. 
+
+```md
+/
+├── src
+│   └── http
+│       ├── get-index/
+│       ├── get-answer/
+|   └── shared/
+|       ├── helper.js
+├── .arc
+└── package.json
+```
+
+When you navigate to http://localhost:3333/answer you will be greeted with data from our shared module, and it can be used by any other function.
+
+## `src/views` example
+
+The `src/views` folder is a special location that allows you to include code for each of your HTTP functions with a GET route. Continuing with our `/src/shared` example we will include a layout template that your HTTP functions can use.
+
+1. Modify the `.arc` file to match the following:
 
 ```md
 @app
-arc-shared-views
+arc-shared
 
 @http
-get / 
+get /
+get /answer 
 get /about
 get /css/:stylesheet
 
@@ -69,7 +128,10 @@ get /css/:stylesheet
 get / 
 get /about
 ```
-3. Create a new folder and file, `src/views/layout.js`. In this file we'll write the following contents: 
+
+What we've done is added two new routes -  `/about` and `/css/:stylesheet`, then declared that two of the routes `/` and `/about` should receive a copy of the modules in `src/views`. 
+
+2. Create a new folder and file, `src/views/layout.js`. In this file we'll write the following contents: 
 
 ```javascript
 module.exports = function Layout (props) {
@@ -90,7 +152,7 @@ module.exports = function Layout (props) {
 `
 }
 ```
-This is our shared view template that will be used by each GET route. 
+This is our shared view template that will be used by each GET route listed under the `@views` pragma in the `.arc` file. 
 
 4. Next we'll modify `src/http/get-index/index.js` with the following: 
 
@@ -152,7 +214,7 @@ exports.handler = async function http (request) {
 When `/about` is requested, this function will execute and be able to return the data being passed into `Layout()`. 
 
 6. Finally we have some finer control over which GET functions will have `/src/views` copied into it. We do this with the `@views` pragma in the `.arc` file. 
-We want to create an URL to our style sheet, but this function doesn't need access to the layout code. Only the GET routes under `@views` will have the `src/views` code copied into it. 
+We want to create an URL to our style sheet, but this function doesn't need access to the layout code. Only the GET routes under `@views` will have the `src/views` code copied into it. Our first route of `/answer` won't have the `src/views` modules copied into `node_modules`. 
 
 Now we can modify the code in `/src/http/get-css-000stylesheet/index.js` with the following: 
 ```javascript
