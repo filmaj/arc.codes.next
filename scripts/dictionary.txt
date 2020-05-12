@@ -95,6 +95,7 @@ DynamoDB
 DynamoDB.
 easyDNS
 EC2
+eg.
 endpoint
 endpoints
 env
