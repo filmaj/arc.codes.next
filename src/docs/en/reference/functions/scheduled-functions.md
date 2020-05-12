@@ -10,7 +10,7 @@ sections:
 
 ## Overview
 
-Scheduled functions are functions that are invoked at specified times and can be used in conjunction with event functions to send messages on a schedule. Architect uses [CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html) to create rules that self-trigger on an automated schedule using cron or rate expressions. All scheduled events use UTC time zone and the minimum precision for schedules is 1 minute. 
+Scheduled functions are functions that are invoked at specified times and can be used in conjunction with event functions to send messages on a schedule. Architect uses [CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html) to create rules that self-trigger on an automated schedule using cron or rate expressions. All scheduled events use the UTC time zone, and the minimum precision for schedules is 1 minute. 
 
 **Sections**
 [Getting Started](#getting-started)
@@ -31,7 +31,7 @@ To get started with scheduled functions we must first add the `@scheduled` pragm
 
 ### Provision
 
-This `.arc` file defines some scheduled functions:
+This `.arc` file defines some scheduled functions using both `cron` & `rate`:
 
 ```bash
 @app
@@ -69,7 +69,7 @@ Cron expressions allow us to give our functions granular settings. `crons` have 
 
 ### Wildcards
 
-- The , (comma) wildcard includes additional values. In the Month field, JAN,FEB,MAR would include January, February, and March.
+- The (,) (comma) wildcard includes additional values. In the Month field, JAN, FEB, MAR would include January, February, and March.
 
 - The - (dash) wildcard specifies ranges. In the Day field, 1-15 would include days 1 through 15 of the specified month.
 
@@ -77,23 +77,25 @@ Cron expressions allow us to give our functions granular settings. `crons` have 
 
 - The / (forward slash) wildcard specifies increments. In the Minutes field, you could enter 1/10 to specify every tenth minute, starting from the first minute of the hour (for example, the 11th, 21st, and 31st minute, and so on).
 
-- The ? (question mark) wildcard specifies one or another. In the Day-of-month field you could enter 7 and if you didn't care what day of the week the 7th was, you could enter ? in the Day-of-week field.
+- The ? (question mark) wildcard specifies one or another. In the Day-of-month field, you could enter 7, and if you didn't care what day of the week the 7th was, you could enter ? in the Day-of-week field.
 
 - The L wildcard in the Day-of-month or Day-of-week fields specifies the last day of the month or week.
 
 - The W wildcard in the Day-of-month field specifies a weekday. In the Day-of-month field, 3W specifies the weekday closest to the third day of the month.
 
-- The # wildcard in the Day-of-week field specifies a certain instance of the specified day of the week within a month. For example, 3#2 would be the second Tuesday of the month: the 3 refers to Tuesday because it is the third day of each week, and the 2 refers to the second day of that type within the month.
+- The # wildcard in the Day-of-week field specifies a particular instance of the specified day of the week within a month. For example, 3#2 would be the second Tuesday of the month: the 3 refers to Tuesday because it is the third day of each week, and the 2 refers to the second day of that type within the month.
+
+> To dig deeper into `cron` expressions head [here to learn more.](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
 
 ## Rate Expressions
 
-A rate expression starts when you create the scheduled event rule, and then runs on its defined schedule.
+A `rate` expression is a lot less granular that a `cron` expression. `rate` expressions only have two required fields that are separated by white space.
 
-Rate expressions have two required fields. Fields are separated by white space.
+### Rate expression syntax
 
 **value**
 
-A positive number.
+A positive number that sets the numerical length of your `rate` expression. 
 
 **unit**
 
@@ -107,5 +109,12 @@ If the value is equal to 1, then the unit must be singular. Similarly, for value
 
 ## Examples
 
-ADD ME!
+```bash
+@app
+testapp
 
+# Example of `rate` & `cron` expressions
+@scheduled
+daily-update-buddy rate(1 day)
+friday-only cron(0 15 ? * FRI *)
+```
