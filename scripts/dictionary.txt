@@ -126,6 +126,7 @@ init
 Init
 installable
 internets
+integrations
 js
 JS
 JSF
