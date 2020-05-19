@@ -2,7 +2,7 @@
 
 # A fast and powerful way to build serverless apps with JS, Python, Ruby and .NET
 
-**Architect is a toolset for building serverless apps that are fast, modern, & MASSIVELY scalable.**
+**Architect is a toolkit for building serverless apps that are fast, modern, & MASSIVELY scalable.**
 
 Architect helps you leverage powerful cloud services (such as **Amazon Web Services**) easily and quickly while letting you [develop locally and offline](/en/guides/tutorials/working-locally-and-offline).
 
@@ -10,7 +10,7 @@ Architect helps you leverage powerful cloud services (such as **Amazon Web Servi
 - Implement [*cloud native* functions](/en/guides/tutorials/developing-with-cloud-functions) for versatile compute
 - Leverage a [cloud-hosted database for data persistence](/en/guides/tutorials/modeling-and-persisting-data), querying and trigger functions
 - Deliver [static assets](/en/reference/static-assets/static) fast with a [CDN](/en/reference/static-assets/cdn)
-- Manage compute [tasks and asynchronous integrations](/en/guides/tutorials/background-tasks) with ready-to-go queueing, publish/subscribe and scheduling management
+- Manage compute [tasks and asynchronous integrations](/en/guides/tutorials/background-tasks) with ready-to-go queuing, publish/subscribe and scheduling management
 - Store sensitive information securely in the cloud using [environment variables](/en/reference/architect-manifest-and-config/environment-file)
 
 [Architect is on a mission](/en/about/mission) to make building web apps free from infrastructure complexity and vendor cruft.
