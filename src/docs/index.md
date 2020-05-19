@@ -1,75 +1,21 @@
 <img src="../assets/architect-logo-500b@2x.png" style="height:100">
 
-# The most powerful way to build serverless web apps with JS, Python, and Ruby
+# A fast and powerful way to build serverless apps with JS, Python, Ruby and .NET
 
-**Architect provides **everything** you need to build serverless apps that are fast, modern, & MASSIVELY scalable.**
+**Architect is a toolset for building serverless apps that are fast, modern, & MASSIVELY scalable.**
 
-Architect helps you leverage powerful **Amazon Web Services** more easily and quickly.
+Architect helps you leverage powerful cloud services (such as **Amazon Web Services**) easily and quickly while letting you [develop locally and offline](/en/guides/tutorials/working-locally-and-offline).
 
-- [Lambda](https://aws.amazon.com/lambda/) *cloud native* functions for compute 
-- [API Gateway](https://aws.amazon.com/api-gateway/) for HTTP
-- [Route53](https://aws.amazon.com/route53) for DNS
-- [CloudFront](https://aws.amazon.com/cloudfront/) for CDN
-- [CloudFormation](https://aws.amazon.com/cloudformation/) for packaging deployments
-- [S3](https://aws.amazon.com/s3/) for static assets
-- [Simple Notification Service](https://aws.amazon.com/sns/) for event pub/sub functions
-- [Simple Queue Service](https://aws.amazon.com/sqs/) for queue functions
-- [CloudWatch Events](https://docs.aws.amazon.com/lambda/latest/dg/with-scheduled-events.html) for scheduled functions
-- [DynamoDB](https://aws.amazon.com/dynamodb/) for data persistence, querying and trigger functions
-- [Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html) for environment variables
+- Organize your cloud infrastructure and HTTP routes with a [simple manifest](/en/reference/architect-project-structure)
+- Implement [*cloud native* functions](/en/guides/tutorials/developing-with-cloud-functions) for versatile compute
+- Leverage a [cloud-hosted database for data persistence](/en/guides/tutorials/modeling-and-persisting-data), querying and trigger functions
+- Deliver [static assets](/en/reference/static-assets/static) fast with a [CDN](/en/reference/static-assets/cdn)
+- Manage compute [tasks and asynchronous integrations](/en/guides/tutorials/background-tasks) with ready-to-go queueing, publish/subscribe and scheduling management
+- Store sensitive information securely in the cloud using [environment variables](/en/reference/architect-manifest-and-config/environment-file)
 
-**Quickstart**
+[Architect is on a mission](/en/about/mission) to make building web apps free from infrastructure complexity and vendor cruft.
 
-1. Install Architect
-
-```bash
-npm install -g @architect/architect
-```
-
-2. Create a project folder
-
-```bash
-mkdir testapp
-cd testapp
-```
-
-3. Run `arc init` to generate a basic project:
-
-```
-/
-├── src
-│   └── http
-│       └── get-index/index.js
-└── .arc
-```
-
-4. Check out your first `.arc` file & HTTP function!
-
-```bash
-# /project/path/.arc
-@app
-your-app-name
-
-@http
-get /
-```
-
-```javascript
-// src/http/get-index/index.js
-
-exports.handler = async function http(request) {
-  return {
-    headers: { 'Content-Type': 'text/html; charset=utf-8;' },
-    body: '<h1>Hello World! 🎉</h1>'
-  }
-}
-```
-
-## That's it! Ready to ship?
-
-Ensure you've [met the system prerequisites](/en/guides/get-started/detailed-setup) and run: `arc deploy`.
-
-Your new app will be online within seconds.
+**[Quickstart](/en/guides/get-started/quickstart):** Less talking, more doing; give it a whirl in seconds.
 
 **Want to join the community and learn more?**
 
