@@ -5,20 +5,27 @@ description: 160 (or fewer) character description of this document!
 
 ## Mission
 
-Architect is on a mission to make building web apps free from infrastructure complexity and vendor cruft. Our goal is to focus on the core business logic required to create value, ship only the code that matters, iterate faster and still enjoy unprecedented availability guarantees.
+Architect is on a **mission** to make building web apps free from infrastructure complexity and vendor cruft. Our **goal** is to focus on the core business logic required to create value, ship only the code that matters, iterate faster and still enjoy unprecedented availability guarantees. Architect is a 100% **free and open source** project [hosted on GitHub](https://github.com/architect), owned by the [OpenJS Foundation](https://openjsf.org) and [**governed transparently and collaboratively**](/en/about/governance) with its [community](/en/about/community/).
 
-## Infra as code
+## Infrastructure as code
 
-Architect defines a high level manifest file, in multiple open formats, and views cloud infrastructure as a build artifact.
+Architect defines a [high-level manifest file](/en/reference/architect-project-structure), in [multiple open formats](/en/reference/architect-manifest-and-config/project-manifest-and-config), and views cloud infrastructure as a build artifact.
 
-- Focus on defining app architecture with clear language in plain text
-- Generate code to work locally and totally offline
-- Deploy and extend with standard CloudFormation templates
+- Focus on defining [app architecture with clear language in plain text](/en/reference/architect-project-structure)
+- Generate code to [work locally and totally offline](/en/guides/tutorials/working-locally-and-offline)
+- Implement your own infrastructure extensions with [macros](/en/reference/macros)
 - The format, parser, and tooling are also all completely open to extension
 
 > The Architect manifest is entirely portable between cloud vendors however no ports to clouds other than AWS have been made as of today
 
 ## Formats supported
+
+<!-- I would remove this section; seems like a duplicate of:
+- /en/guides/get-started/project-layout#manifest-format-overview
+- /en/reference/architect-project-structure
+- /en/reference/architect-manifest-and-config/project-manifest-and-config
+Plus, detailed talk of formats doesn't belong in the mission/vision statement
+-->
 
 Architect supports a native text file format `.arc` in addition to popular formats: `arc.json`, `arc.yaml` and `arc.toml` when teams prefer those dialects. 
 
